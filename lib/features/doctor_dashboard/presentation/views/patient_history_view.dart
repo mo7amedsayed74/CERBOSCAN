@@ -70,6 +70,10 @@ class PatientHistoryView extends StatelessWidget {
               txt: 'Show Medical History',
               onPressed: () {},
             ),
+            Option(
+              txt: 'View Report',
+              onPressed: () {},
+            ),
           ],
         ),
       ),
