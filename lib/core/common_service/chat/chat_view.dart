@@ -1,5 +1,5 @@
 import 'package:cerboscan/core/common_service/chat/chat_details_view.dart';
-import 'package:cerboscan/core/const.dart';
+import 'package:cerboscan/core/utiles/const.dart';
 import 'package:flutter/material.dart';
 
 class Chats extends StatelessWidget {
@@ -37,7 +37,13 @@ class Chats extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ChatDetailsScreen()),
+              MaterialPageRoute(
+                builder: (_) => ChatDetailsScreen(
+                  image: 'assets/images/mAdel.jpeg',
+                  name: 'Mohamed Adel',
+                  messages: doctorMessages,
+                ),
+              ),
             );
           },
           child: ListTile(
@@ -69,3 +75,19 @@ class Chats extends StatelessWidget {
     );
   }
 }
+
+
+List<Msg> doctorMessages = [
+  Msg(
+    text: 'Hi Mohamed, How are you!',
+    msgFrom: MessageFrom.fromSender,
+  ),
+  Msg(
+    text: 'I’m fine, Doctor',
+    msgFrom: MessageFrom.toReceiver,
+  ),
+  Msg(
+    text: 'I want to see you today at the clinic',
+    msgFrom: MessageFrom.fromSender,
+  ),
+];

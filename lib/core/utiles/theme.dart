@@ -1,4 +1,4 @@
-import 'package:cerboscan/core/const.dart';
+import 'package:cerboscan/core/utiles/const.dart';
 import 'package:flutter/material.dart';
 
 ThemeData appTheme = ThemeData(

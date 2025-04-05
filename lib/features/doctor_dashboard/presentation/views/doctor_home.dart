@@ -1,6 +1,8 @@
-import 'package:cerboscan/core/const.dart';
+import 'package:cerboscan/core/shared_widgets/home_card_widget.dart';
 import 'package:cerboscan/features/doctor_dashboard/presentation/views/patient_history_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/common_service/person_model.dart';
 
 class DoctorHome extends StatelessWidget {
   const DoctorHome({super.key});
@@ -22,28 +24,7 @@ class DoctorHome extends StatelessWidget {
                 ),
               );
             },
-            child: Card(
-              shadowColor: primaryColor,
-              child: ListTile(
-                title: Text(
-                  patients[index].name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text(
-                  patients[index].status,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(patients[index].image),
-                ),
-                trailing: const Icon(Icons.arrow_forward_ios),
-              ),
-            ),
+            child: HomeCardWidget(item: patients[index]),
           );
         },
         separatorBuilder: (context, index) {
@@ -55,53 +36,43 @@ class DoctorHome extends StatelessWidget {
   }
 }
 
-class Patient {
-  final String name;
-  final String mail;
-  final String phone;
-  final String status;
-  final String image;
-
-  Patient({required this.mail, required this.phone, required this.name, required this.status, required this.image});
-}
-
-List<Patient> patients = [
-  Patient(
+List<Person> patients = [
+  Person(
     name: 'Asmaa Ashraf',
     mail: 'asmaaAshraf@gmail.com',
     phone: '01153262796',
     status: 'Has Not Record',
     image: 'assets/images/girl.jpg',
   ),
-  Patient(
+  Person(
     name: 'Amir Nazmy',
     mail: 'amirNazmy@gmail.com',
     phone: '01153262796',
     status: 'Has Record',
     image: 'assets/images/boy.jpg',
   ),
-  Patient(
+  Person(
     name: 'Aya Anwer',
     mail: 'ayaAnwer@gmail.com',
     phone: '01153262796',
     status: 'Has Record',
     image: 'assets/images/girl.jpg',
   ),
-  Patient(
+  Person(
     name: 'Mohamed Adel',
     mail: 'mohamedAdel@gmail.com',
     phone: '01153262796',
     status: 'Has Not Record',
     image: 'assets/images/boy.jpg',
   ),
-  Patient(
+  Person(
     name: 'Habiba Amr',
     mail: 'habibaAmr@gmail.com',
     phone: '01153262796',
     status: 'Has Not Record',
     image: 'assets/images/girl.jpg',
   ),
-  Patient(
+  Person(
     name: 'Mohamed Sayed',
     mail: 'mohamedSayed@gmail.com',
     phone: '01153262796',

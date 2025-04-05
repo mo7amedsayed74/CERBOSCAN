@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/const.dart';
+import '../../../../../core/utiles/const.dart';
 
 class LoginTitle extends StatelessWidget {
   final String title;

@@ -1,13 +1,12 @@
-import 'package:cerboscan/core/const.dart';
+import 'package:cerboscan/features/admin_dashboard/presentation/views/admin_layout.dart';
 import 'package:cerboscan/features/auth/presentation/views/widgets/login_button.dart';
 import 'package:cerboscan/features/auth/presentation/views/widgets/login_image.dart';
 import 'package:cerboscan/features/auth/presentation/views/widgets/login_link.dart';
 import 'package:cerboscan/features/auth/presentation/views/widgets/login_text_field.dart';
 import 'package:cerboscan/features/auth/presentation/views/widgets/login_title.dart';
-import 'package:cerboscan/features/auth/presentation/views/widgets/select_role.dart';
+import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_layout.dart';
+import 'package:cerboscan/features/patient_dashboard/presentation/views/patient_layout.dart';
 import 'package:flutter/material.dart';
-
-import '../../../doctor_dashboard/presentation/views/doctor_layout.dart';
 
 
 var selectedRole = '';
@@ -50,10 +49,13 @@ class LoginView extends StatelessWidget {
                   LoginButton(
                     text: 'Login',
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => DoctorLayout()),
-                      );
+                      if(_emailController.text=='Admin'){
+                        navigateTo(context: context, screen: AdminLayout());
+                      }else if(_emailController.text=='Doctor'){
+                        navigateTo(context: context, screen: DoctorLayout());
+                      }else if(_emailController.text=='Patient'){
+                        navigateTo(context: context, screen: PatientLayout());
+                      }
                     },
                   ),
                   LoginLink(
@@ -69,4 +71,14 @@ class LoginView extends StatelessWidget {
       ),
     );
   }
+}
+
+navigateTo({
+  required BuildContext context,
+  required Widget screen,
+}){
+return Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (_) => screen),
+);
 }

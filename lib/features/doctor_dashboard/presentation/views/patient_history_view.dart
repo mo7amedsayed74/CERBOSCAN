@@ -1,7 +1,7 @@
-import 'package:cerboscan/core/const.dart';
-import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_home.dart';
+import 'package:cerboscan/core/utiles/const.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_service/person_model.dart';
 import '../../../auth/presentation/views/widgets/login_text_field.dart';
 
 class PatientHistoryView extends StatelessWidget {
@@ -10,7 +10,7 @@ class PatientHistoryView extends StatelessWidget {
     required this.patientInfo,
   });
 
-  final Patient patientInfo;
+  final Person patientInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class InfoContent extends StatelessWidget {
     required this.patientInfo,
   });
 
-  final Patient patientInfo;
+  final Person patientInfo;
 
   @override
   Widget build(BuildContext context) {

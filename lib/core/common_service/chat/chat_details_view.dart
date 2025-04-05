@@ -1,10 +1,17 @@
-import 'package:cerboscan/core/const.dart';
+import 'package:cerboscan/core/utiles/const.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailsScreen extends StatelessWidget {
   ChatDetailsScreen({
     super.key,
+    required this.name,
+    required this.image,
+    required this.messages,
   });
+
+  final String name;
+  final String image;
+  final List<Msg> messages;
 
   final TextEditingController messageController = TextEditingController();
 
@@ -17,12 +24,12 @@ class ChatDetailsScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20.0,
-              backgroundImage: AssetImage('assets/images/mAdel.jpeg'),
+              backgroundImage: AssetImage(image),
             ),
             const SizedBox(width: 15.0),
             Expanded(
               child: Text(
-                'Mohamed Adel',
+                name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -171,18 +178,3 @@ class Msg {
 
   Msg({required this.text, required this.msgFrom});
 }
-
-List<Msg> messages = [
-  Msg(
-    text: 'Hi Mohamed, How are you!',
-    msgFrom: MessageFrom.fromSender,
-  ),
-  Msg(
-    text: 'I’m fine, Doctor',
-    msgFrom: MessageFrom.toReceiver,
-  ),
-  Msg(
-    text: 'I want to see you today at the clinic',
-    msgFrom: MessageFrom.fromSender,
-  ),
-];

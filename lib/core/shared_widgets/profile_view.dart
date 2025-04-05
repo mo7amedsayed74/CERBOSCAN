@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../../auth/presentation/views/widgets/login_button.dart';
-import '../../../auth/presentation/views/widgets/login_text_field.dart';
+import '../../features/auth/presentation/views/widgets/login_button.dart';
+import '../../features/auth/presentation/views/widgets/login_text_field.dart';
 
 class ProfileView extends StatelessWidget {
-  ProfileView({super.key});
+  ProfileView({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.image,
+  });
+
+  final String name;
+  final String email;
+  final String phone;
+  final String image;
 
   final _nameController = TextEditingController();
 
@@ -20,15 +31,16 @@ class ProfileView extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 55,
-            backgroundImage: AssetImage('assets/images/m.jpeg'),
+            backgroundImage: AssetImage(image),
           ),
           const SizedBox(height: 24),
           Expanded(
             child: ListView(
               children: [
+                // Name
                 LoginTextField(
                   controller: _nameController,
-                  hintText: 'Ahmed Shalaby',
+                  hintText: name,
                   enabled: false,
                   prefixIcon: Icons.person,
                   onSuffixIconPressed: () {},
@@ -38,7 +50,7 @@ class ProfileView extends StatelessWidget {
                 LoginTextField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
-                  hintText: 'ahmedshalaby@gmail.com',
+                  hintText: email,
                   enabled: false,
                   prefixIcon: Icons.email,
                   onSuffixIconPressed: () {},
@@ -48,7 +60,7 @@ class ProfileView extends StatelessWidget {
                 LoginTextField(
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
-                  hintText: '01153262796',
+                  hintText: phone,
                   enabled: false,
                   prefixIcon: Icons.phone,
                   onSuffixIconPressed: () {},

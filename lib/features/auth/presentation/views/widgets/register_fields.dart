@@ -23,16 +23,6 @@ class RegisterFields extends StatelessWidget {
           controller: _nameController,
           labelText: 'Name',
           prefixIcon: Icons.person,
-          onSuffixIconPressed: () {},
-        ),
-        const SizedBox(height: 20),
-        // Email field
-        LoginTextField(
-          keyboardType: TextInputType.emailAddress,
-          controller: _emailController,
-          labelText: 'Email',
-          prefixIcon: Icons.email,
-          onSuffixIconPressed: () {},
         ),
         const SizedBox(height: 20),
         // Phone field
@@ -41,7 +31,14 @@ class RegisterFields extends StatelessWidget {
           controller: _phoneController,
           labelText: 'Phone',
           prefixIcon: Icons.phone,
-          onSuffixIconPressed: () {},
+        ),
+        const SizedBox(height: 20),
+        // Email field
+        LoginTextField(
+          keyboardType: TextInputType.emailAddress,
+          controller: _emailController,
+          labelText: 'Email',
+          prefixIcon: Icons.email,
         ),
         const SizedBox(height: 20),
         // Password field

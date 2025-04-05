@@ -1,9 +1,11 @@
-import 'package:cerboscan/features/auth/presentation/views/widgets/login_button.dart';
-import 'package:cerboscan/features/auth/presentation/views/widgets/register_fields.dart';
 import 'package:flutter/material.dart';
 
-class NewPatientView extends StatelessWidget {
-  const NewPatientView({super.key});
+import '../../../auth/presentation/views/widgets/login_button.dart';
+import '../../../auth/presentation/views/widgets/register_fields.dart';
+
+
+class AddDoctorView extends StatelessWidget {
+  const AddDoctorView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class NewPatientView extends StatelessWidget {
       child: ListView(
         children: [
           RegisterFields(),
-          SizedBox(height: 14),
+          SizedBox(height: 20),
           LoginButton(
             onPressed: () {},
             text: 'Add',

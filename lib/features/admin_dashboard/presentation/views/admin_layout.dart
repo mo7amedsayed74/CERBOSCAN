@@ -1,20 +1,19 @@
-import 'package:cerboscan/core/common_service/chat/chat_view.dart';
 import 'package:cerboscan/core/shared_widgets/logout_btn.dart';
 import 'package:cerboscan/core/utiles/const.dart';
-import 'package:cerboscan/features/doctor_dashboard/presentation/views/add_patient_view.dart';
-import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_home.dart';
+import 'package:cerboscan/features/admin_dashboard/presentation/views/add_doctor_view.dart';
+import 'package:cerboscan/features/admin_dashboard/presentation/views/admin_home.dart';
 import 'package:cerboscan/core/shared_widgets/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DoctorLayout extends StatefulWidget {
-  const DoctorLayout({super.key});
+class AdminLayout extends StatefulWidget {
+  const AdminLayout({super.key});
 
   @override
-  State<DoctorLayout> createState() => _DoctorLayoutState();
+  State<AdminLayout> createState() => _AdminLayoutState();
 }
 
-class _DoctorLayoutState extends State<DoctorLayout> {
+class _AdminLayoutState extends State<AdminLayout> {
   int currentIndex = 0;
 
   @override
@@ -23,10 +22,10 @@ class _DoctorLayoutState extends State<DoctorLayout> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(titles[currentIndex]),
-        actions: currentIndex == 2
+        actions: currentIndex == 1
             ? null
             : [
-                currentIndex == 3
+                currentIndex == 2
                     ? LogoutBtn()
                     : IconButton(
                         onPressed: () {},
@@ -52,14 +51,8 @@ class _DoctorLayoutState extends State<DoctorLayout> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.chat_bubble,
-            ),
-            label: 'Chats',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person_add),
-            label: 'New Patient',
+            label: 'New Doctor',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
@@ -72,20 +65,18 @@ class _DoctorLayoutState extends State<DoctorLayout> {
 }
 
 List<Widget> screens = [
-  DoctorHome(),
-  Chats(),
-  AddPatientView(),
+  AdminHome(),
+  AddDoctorView(),
   ProfileView(
-    name: 'Mohamed Sayed',
-    email: 'mohammedsayed7414@gmail.com',
+    name: 'Ahmed Shalaby',
+    email: 'ahmedshalaby@gmail.com',
     phone: '01153262796',
-    image: 'assets/images/m.jpeg',
+    image: 'assets/images/dr.jpg',
   ),
 ];
 
 List<String> titles = [
-  'Patient',
-  'Chats',
-  'New Patient',
+  'Doctors',
+  'New Doctor',
   'Profile',
 ];
