@@ -1,19 +1,54 @@
-import 'package:cerboscan/core/utiles/const.dart';
 import 'package:flutter/material.dart';
+import 'package:cerboscan/core/utiles/const.dart';
 
-class ChatDetailsScreen extends StatelessWidget {
-  ChatDetailsScreen({
+class ChatDetailsScreen extends StatefulWidget {
+  final String name;
+  final String image;
+  final List<Msg> messages;
+
+  const ChatDetailsScreen({
     super.key,
     required this.name,
     required this.image,
     required this.messages,
   });
 
-  final String name;
-  final String image;
-  final List<Msg> messages;
+  @override
+  State<ChatDetailsScreen> createState() => _ChatDetailsScreenState();
+}
 
+class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
+  late List<Msg> _messages;
   final TextEditingController messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _messages = List.from(widget.messages);
+  }
+
+  void _sendMessage() {
+    final text = messageController.text.trim();
+    if (text.isEmpty) return;
+
+    setState(() {
+      _messages.add(
+        Msg(text: text, msgFrom: MessageFrom.fromSender),
+      );
+    });
+
+    messageController.clear();
+
+    // Scroll to bottom after slight delay
+    Future.delayed(Duration(milliseconds: 100), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 100,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +59,15 @@ class ChatDetailsScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20.0,
-              backgroundImage: AssetImage(image),
+              backgroundImage: AssetImage(widget.image),
             ),
             const SizedBox(width: 15.0),
             Expanded(
               child: Text(
-                name,
+                widget.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],
@@ -46,46 +79,30 @@ class ChatDetailsScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.separated(
+                controller: _scrollController,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  if (messages[index].msgFrom == MessageFrom.fromSender) {
-                    return buildMessage(
-                      text: messages[index].text,
-                      messageFrom: MessageFrom.fromSender,
-                    );
-                  } else {
-                    return buildMessage(
-                      text: messages[index].text,
-                      messageFrom: MessageFrom.toReceiver,
-                    );
-                  }
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 15.0,
+                  final msg = _messages[index];
+                  return buildMessage(
+                    text: msg.text,
+                    messageFrom: msg.msgFrom,
                   );
                 },
-                itemCount: messages.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 15.0),
+                itemCount: _messages.length,
               ),
             ),
             Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: primaryColor,
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(
-                  15.0,
-                ),
+                border: Border.all(color: primaryColor, width: 1.0),
+                borderRadius: BorderRadius.circular(15.0),
               ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Row(
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: TextFormField(
                         controller: messageController,
                         decoration: const InputDecoration(
@@ -99,7 +116,7 @@ class ChatDetailsScreen extends StatelessWidget {
                     height: 50.0,
                     color: primaryColor,
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: _sendMessage,
                       minWidth: 1.0,
                       child: const Icon(
                         Icons.send,
@@ -126,44 +143,23 @@ class ChatDetailsScreen extends StatelessWidget {
           ? AlignmentDirectional.centerEnd
           : AlignmentDirectional.centerStart,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 5.0,
-          horizontal: 10.0,
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        decoration: BoxDecoration(
+          color: messageFrom == MessageFrom.fromSender
+              ? primaryColor.withOpacity(0.5)
+              : Colors.grey[300],
+          borderRadius: BorderRadiusDirectional.only(
+            bottomStart: Radius.circular(10.0),
+            topStart: Radius.circular(10.0),
+            topEnd: Radius.circular(10.0),
+            bottomEnd: messageFrom == MessageFrom.fromSender
+                ? Radius.zero
+                : Radius.circular(10.0),
+          ),
         ),
-        decoration: messageFrom == MessageFrom.fromSender
-            ? BoxDecoration(
-                color: primaryColor.withOpacity(0.5),
-                borderRadius: const BorderRadiusDirectional.only(
-                  bottomStart: Radius.circular(
-                    10.0,
-                  ),
-                  topStart: Radius.circular(
-                    10.0,
-                  ),
-                  topEnd: Radius.circular(
-                    10.0,
-                  ),
-                ),
-              )
-            : BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: const BorderRadiusDirectional.only(
-                  bottomEnd: Radius.circular(
-                    10.0,
-                  ),
-                  topStart: Radius.circular(
-                    10.0,
-                  ),
-                  topEnd: Radius.circular(
-                    10.0,
-                  ),
-                ),
-              ),
         child: Text(
           text,
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
     );
@@ -178,3 +174,4 @@ class Msg {
 
   Msg({required this.text, required this.msgFrom});
 }
+

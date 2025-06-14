@@ -1,5 +1,5 @@
 import 'package:cerboscan/core/utiles/theme.dart';
-import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_layout.dart';
+import 'package:cerboscan/features/auth/presentation/views/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,20 +33,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: DoctorLayout(),
+      home: LoginView(),
     );
   }
 }
 
-/*
-
-const Text(
-                    'Please select your role:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                      fontSize: 16
-                    ),
-                  ),
-                  SelectRole(),
- */
