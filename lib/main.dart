@@ -1,5 +1,4 @@
 import 'package:cerboscan/core/utiles/theme.dart';
-import 'package:cerboscan/features/auth/presentation/views/login_view.dart';
 import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
