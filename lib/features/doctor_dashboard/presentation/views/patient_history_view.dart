@@ -1,4 +1,6 @@
 import 'package:cerboscan/core/utiles/const.dart';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_service/person_model.dart';
@@ -206,18 +208,86 @@ class InfoContent extends StatelessWidget {
   }
 }
 
-class AddEEG extends StatelessWidget {
+class AddEEG extends StatefulWidget {
   const AddEEG({super.key});
+
+  @override
+  State<AddEEG> createState() => _AddEEGState();
+}
+
+class _AddEEGState extends State<AddEEG> {
+  String result = '';
+
+  Future<void> pickAndSendNPY() async {
+    final resultFile = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      //allowedExtensions: ['npy'],
+    );
+    if (resultFile == null) return;
+
+    final filePath = resultFile.files.single.path!;
+    final fileName = resultFile.files.single.name;
+
+    if (!fileName.endsWith('.npy')) {
+      setState(() {
+        result = 'Invalid file type. Please select a .npy file';
+      });
+      return;
+    }
+
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath, filename: fileName),
+    });
+
+    final dio = Dio();
+
+    try {
+      final response = await dio.post(
+        'http://10.0.2.2:5000/predict',
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
+      );
+
+      setState(() {
+        result = response.data['result'].toString();
+        //print(result);
+      });
+    } catch (e) {
+      if (e is DioException && e.response != null) {
+        //print('Server responded with: ${e.response?.data}');
+        setState(() {
+          result = 'Server Error: ${e.response?.data}';
+        });
+      } else {
+        //print('General Error: $e');
+        setState(() {
+          result = 'Error: $e';
+        });
+      }
+      //print(result);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: pickAndSendNPY,
           icon: Icon(Icons.file_upload_outlined),
         ),
-        Text('Please, upload file with CSV format!'),
+        Text(
+          result == ''
+              ? 'Please, upload file with CSV format!'
+              : 'Result: $result',
+          style: result == ''?TextStyle():TextStyle(
+            color: Colors.black,
+            fontSize: 34,
+          ),
+        ),
       ],
     );
   }

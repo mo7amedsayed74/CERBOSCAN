@@ -23,23 +23,24 @@ class AuthCubit extends Cubit<AuthStates> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: email,
             password: password,
-      );
-
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && user.emailVerified) {
-        if (context.mounted) {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const // Next Screen,
-          //   ),
-          // );
-        }
-      } else {
-        if (context.mounted) {
-          shoowDialog(context);
-        }
-      }
+      ).then((val){
+        emit(LoginSuccessState(val.user!.uid));
+      });
+      // User? user = FirebaseAuth.instance.currentUser;
+      // if (user != null && user.emailVerified) {
+      //   if (context.mounted) {
+      //     // Navigator.push(
+      //     //   context,
+      //     //   MaterialPageRoute(
+      //     //     builder: (context) => const // Next Screen,
+      //     //   ),
+      //     // );
+      //   }
+      // } else {
+      //   if (context.mounted) {
+      //     shoowDialog(context);
+      //   }
+      // }
     } on FirebaseAuthException catch (e) {
       emit(LoginErrorState(e.message ?? 'Login Failed'));
     } catch (e) {
@@ -48,7 +49,8 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  void userRegister({
+
+  void patientRegister({
     required String name,
     required String phone,
     required String email,

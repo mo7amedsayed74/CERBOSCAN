@@ -1,12 +1,17 @@
 import 'package:cerboscan/core/utiles/theme.dart';
 import 'package:cerboscan/features/auth/presentation/views/login_view.dart';
+import 'package:cerboscan/features/doctor_dashboard/presentation/views/doctor_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/utiles/cache_helper.dart';
+import 'core/utiles/function/bloc_observer.dart';
 import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+  await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -29,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: LoginView(),
+      home: DoctorLayout(),
     );
   }
 }
